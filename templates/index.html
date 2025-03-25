@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steganography App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>Steganography Tool</h1>
+        <p>Hide secret images within carrier images</p>
+    </header>
+    
+    <main>
+        <section class="container">
+            <div class="tab-container">
+                <div class="tabs">
+                    <button class="tab-button active" data-tab="hide">Hide Image</button>
+                    <button class="tab-button" data-tab="extract">Extract Image</button>
+                </div>
+                
+                <div class="tab-content active" id="hide-tab">
+                    <h2>Hide a Secret Image</h2>
+                    <form id="hide-form">
+                        <div class="form-group">
+                            <label for="carrier-image">Carrier Image:</label>
+                            <input type="file" id="carrier-image" accept="image/*" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="secret-image">Secret Image:</label>
+                            <input type="file" id="secret-image" accept="image/*" required>
+                        </div>
+                        
+                        <button type="button" id="hide-button">Hide Image</button>
+                        <div id="hide-status"></div>
+                    </form>
+                </div>
+                
+                <div class="tab-content" id="extract-tab">
+                    <h2>Extract Hidden Image</h2>
+                    <form id="extract-form">
+                        <div class="form-group">
+                            <label for="stego-image">Steganographic Image:</label>
+                            <input type="file" id="stego-image" accept="image/*" required>
+                        </div>
+                        
+                        <button type="button" id="extract-button">Extract Image</button>
+                        <div id="extract-status"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        
+        <div class="info-container">
+            <div class="info-card">
+                <h3><i class="fas fa-info-circle"></i> What is Steganography?</h3>
+                <p>Steganography is the practice of hiding secret information within ordinary, non-secret data or a physical object. In this application, you can hide an entire image inside another image.</p>
+            </div>
+            
+            <div class="info-card">
+                <h3><i class="fas fa-question-circle"></i> How to Use</h3>
+                <p><strong>To Hide:</strong> Select a carrier image (the visible container), a secret image to hide, and click "Hide Image".</p>
+                <p><strong>To Extract:</strong> Select a steganographic image created by this tool and click "Extract Image".</p>
+            </div>
+            
+            <div class="info-card">
+                <h3><i class="fas fa-lock"></i> Security Note</h3>
+                <p>For best results, the carrier image should be larger than the secret image. The extraction quality depends on the image characteristics.</p>
+            </div>
+        </div>
+    </main>
+    
+    <div id="result-modal" class="modal">
+        <div class="modal-content result-content">
+            <span class="close-modal">&times;</span>
+            <h2>Steganography Result</h2>
+            <div class="result-image-container">
+                <img id="result-image" alt="Result">
+            </div>
+            <a id="result-download" class="download-button" download="result.png">
+                <i class="fas fa-download"></i> Download Image
+            </a>
+        </div>
+    </div>
+    
+    <div id="error-modal" class="modal">
+        <div class="modal-content error-content">
+            <span class="close-modal">&times;</span>
+            <h2>Error</h2>
+            <p id="error-text"></p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Made with <i class="fas fa-heart"></i> by <a href="https://emdanish.vercel.app" target="_blank">Danish</a></p>
+    </footer>
+    
+    <script>
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+                
+                button.classList.add('active');
+            });
+        });
+    </script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html> 

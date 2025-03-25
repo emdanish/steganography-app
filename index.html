@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steganograph - Hide Your Secrets</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-eye-slash"></i>
+                <h1>Steganograph</h1>
+            </div>
+            <div class="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </div>
+        </header>
+
+        <main>
+            <div class="tab-container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="hide">Hide Image</button>
+                    <button class="tab-btn" data-tab="extract">Extract Image</button>
+                    <button class="tab-btn" data-tab="about">About</button>
+                </div>
+
+                <!-- Hide Image Section -->
+                <div class="tab-content active" id="hide-content">
+                    <div class="upload-container">
+                        <div class="upload-box" id="carrier-upload">
+                            <i class="fas fa-image"></i>
+                            <h3>Carrier Image</h3>
+                            <p>Upload the image that will hide your secret</p>
+                            <input type="file" id="carrier-file" accept="image/*" hidden>
+                            <button class="upload-btn">Select Image</button>
+                            <div class="preview"></div>
+                        </div>
+                        
+                        <div class="upload-box" id="secret-upload">
+                            <i class="fas fa-key"></i>
+                            <h3>Secret Image</h3>
+                            <p>Upload the image you want to hide</p>
+                            <input type="file" id="secret-file" accept="image/*" hidden>
+                            <button class="upload-btn">Select Image</button>
+                            <div class="preview"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="options-container">
+                        <h3>Steganography Options</h3>
+                        <div class="option">
+                            <label for="quality">Quality Level:</label>
+                            <div class="slider-container">
+                                <input type="range" id="quality" min="1" max="3" value="2">
+                                <div class="quality-labels">
+                                    <span>Low</span>
+                                    <span>Medium</span>
+                                    <span>High</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="option">
+                            <label for="password">Password (Optional):</label>
+                            <input type="password" id="password" placeholder="Add extra security">
+                        </div>
+                    </div>
+                    
+                    <button class="action-btn" id="hide-btn" disabled>
+                        <i class="fas fa-eye-slash"></i> Hide Image
+                    </button>
+                </div>
+
+                <!-- Extract Image Section -->
+                <div class="tab-content" id="extract-content">
+                    <div class="upload-container extract">
+                        <div class="upload-box" id="stego-upload">
+                            <i class="fas fa-file-image"></i>
+                            <h3>Steganographic Image</h3>
+                            <p>Upload the image containing a hidden secret</p>
+                            <input type="file" id="stego-file" accept="image/*" hidden>
+                            <button class="upload-btn">Select Image</button>
+                            <div class="preview"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="options-container">
+                        <div class="option">
+                            <label for="extract-password">Password (If required):</label>
+                            <input type="password" id="extract-password" placeholder="Enter password if required">
+                        </div>
+                    </div>
+                    
+                    <button class="action-btn" id="extract-btn" disabled>
+                        <i class="fas fa-eye"></i> Extract Image
+                    </button>
+                </div>
+
+                <!-- About Section -->
+                <div class="tab-content" id="about-content">
+                    <div class="about-container">
+                        <h2>What is Steganography?</h2>
+                        <p>Steganography is the practice of concealing messages or information within other non-secret data or a physical object. In digital steganography, electronic communications may include steganographic coding inside of a transport layer, such as a document file, image file, program, or protocol.</p>
+                        
+                        <h2>How This App Works</h2>
+                        <p>This application uses LSB (Least Significant Bit) steganography to hide images within images. This technique works by replacing the least significant bits in the carrier image with the most significant bits from the secret image.</p>
+                        
+                        <div class="features">
+                            <div class="feature">
+                                <i class="fas fa-lock"></i>
+                                <h3>Secure</h3>
+                                <p>Optional password protection adds an extra layer of security to your hidden data.</p>
+                            </div>
+                            
+                            <div class="feature">
+                                <i class="fas fa-sliders-h"></i>
+                                <h3>Adjustable Quality</h3>
+                                <p>Choose between different quality levels to balance between visual fidelity and hidden content size.</p>
+                            </div>
+                            
+                            <div class="feature">
+                                <i class="fas fa-user-shield"></i>
+                                <h3>Privacy-Focused</h3>
+                                <p>All processing happens in your browser - your images are never uploaded to a server.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="result-modal" id="result-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2 id="result-title">Operation Complete</h2>
+                <div class="result-image-container">
+                    <img id="result-image" src="" alt="Result">
+                </div>
+                <div class="result-actions">
+                    <button id="download-result">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                    <button id="copy-result">
+                        <i class="fas fa-copy"></i> Copy to Clipboard
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="loading-overlay" id="loading-overlay">
+            <div class="spinner"></div>
+            <p>Processing your image...</p>
+        </div>
+
+        <footer>
+            <p>Created with <i class="fas fa-heart"></i> | © 2023 Steganograph</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html> 
