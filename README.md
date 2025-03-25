@@ -54,10 +54,6 @@ This application implements LSB (Least Significant Bit) steganography, a techniq
 - Larger carrier images can hide more information.
 - The carrier image should be significantly larger than the secret image.
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request. 
